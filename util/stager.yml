@@ -1,0 +1,12 @@
+defaults:
+  package:      agua-conf
+  outputdir:    /repos/agua/public/submodules
+stage:
+  1:
+    reponame:   agua-ops
+    basedir:    /repos/agua/submodules/agua-conf
+    branch:     dev
+  2:
+    reponame:   agua-ops-public
+    basedir:    /repos/agua/public/submodules/agua-conf
+    branch:     dev
