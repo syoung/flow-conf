@@ -1,5 +1,4 @@
 use MooseX::Declare;
-use Method::Signatures::Modifiers;
 
 =head2
 
@@ -20,8 +19,6 @@ use Method::Signatures::Modifiers;
   
 =cut
 
-
-
 class Conf::Yaml with (Conf::Common, Util::Logger) {
 
 use YAML::Tiny;
@@ -33,8 +30,8 @@ has 'backup'    => ( isa => 'Bool',   is => 'rw', default  =>   1);
 
 # Int
 has 'valueoffset'  =>  ( isa => 'Int', is => 'rw', default => 24 );
-has 'log'      =>  ( isa => 'Int', is => 'rw', default => 4 );
-has 'printlog'    =>  ( isa => 'Int', is => 'rw', default => 5 );
+has 'log'      =>  ( isa => 'Int', is => 'rw', default => 2 );
+has 'printlog'    =>  ( isa => 'Int', is => 'rw', default => 2 );
 
 # String
 has 'inputfile'   =>  (  is  =>  'rw',  isa  =>  'Str'  );
@@ -131,7 +128,10 @@ method _getKey ($keys) {
   $self->logNote("hash", $hash);
   
   foreach my $key ( @$keys ) {
+    $self->logNote( "key", $key );
+    $self->logNote( "hash->{ $key }", $hash->{ $key } );
     $hash  = $hash->{$key};
+    $self->logNote( "RETURNING undef" ) if not defined $hash;
     return undef if not defined $hash;
     $self->logNote("data", $hash);
   }

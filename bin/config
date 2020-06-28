@@ -11,7 +11,6 @@ USAGE
 
 $0 <--mode String> <--key String> [--value String]
 
-
 mode     :  Either 'setKey' or 'getKey'.
 key      :  A ':'-separated multi-level key (e.g., "core:INSTALLDIR").
 value    :  Required in mode 'setKey'. Value can be scalar or JSON.
@@ -21,7 +20,7 @@ EXAMPLE
 # SET A KEY:VALUE PAIR:
 
 ./config --mode setKey \
---key "openstack:TENANTNAME \
+--key "openstack:TENANTNAME" \
 --value Portfolio
 
 # SET A KEY:VALUE DATA STRUCTURE USING JSON:
@@ -38,13 +37,17 @@ core:
 
 };
 
+use strict;
+
 #### EXTERNAL MODULES
 use Term::ANSIColor qw(:constants);
 use Getopt::Long;
 use FindBin qw($Bin);
 
 #### USE LIBRARY
-use lib "$Bin/../..";   
+use lib "$Bin/../../";   
+
+print "@INC\n";
 
 #### INTERNAL MODULES
 use Conf::Yaml;
@@ -57,10 +60,10 @@ my $printlog	=	2;
 my $logfile     =   "$Bin/../../../log/flow.log";
 my $help;
 GetOptions (
-    'mode=s'		=> \$mode,
-    'key=s'			=> \$key,
-    'value=s'		=> \$value,    
-    'log=i'     	=> \$log,
+    'mode=s'		    => \$mode,
+    'key=s'			    => \$key,
+    'value=s'		    => \$value,    
+    'log=i'     	  => \$log,
     'printlog=i'    => \$printlog,
     'help'          => \$help
 ) or die "No options specified. Try '--help'\n";
@@ -78,8 +81,8 @@ my $conf = Conf::Yaml->new(
     memory      =>  0,
     inputfile   =>  $configfile,
     backup      =>  1,
-    log			=>	$log,
-    printlog	=>	$printlog,
+    log			    =>	$log,
+    printlog	  =>	$printlog,
     logfile     =>  $logfile
 );
 
